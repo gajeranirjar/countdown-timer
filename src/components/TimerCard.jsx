@@ -4,7 +4,7 @@ import { Stack, Paper, Typography, Box } from "@mui/material";
 export const TimerCard = ({ timeLeft }) => {
 
   if (timeLeft === "DONE") {
-    return <Typography variant="h5">🎉 Countdown Finished!</Typography>;
+    return <Typography variant="h5">🎉 Countdown Finished 🎉</Typography>;
   }
 
   const seconds = Math.floor((timeLeft / 1000) % 60);
@@ -13,10 +13,10 @@ export const TimerCard = ({ timeLeft }) => {
   const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
 
   const items = [
-    { lable: "Days", value: days },
-    { lable: "Hours", value: hours },
-    { lable: "Minutes", value: minutes },
-    { lable: "Seconds", value: seconds },
+    { lable: "Days", value: days || 0 },
+    { lable: "Hours", value: hours || 0},
+    { lable: "Minutes", value: minutes || 0},
+    { lable: "Seconds", value: seconds || 0},
   ];
 
   return (

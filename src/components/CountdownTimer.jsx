@@ -4,71 +4,79 @@ import { TimerCard } from "./TimerCard";
 
 
 export const Countdown = () => {
+  const [targetDate, setTargetDate] = useState("");
+  const [timeLeft, setTimeLeft] = useState(null);
+  const [error, setError] = useState("");
+  const [started, setStarted] = useState(false);
 
-    const [targetDate, setTargetDate] = useState("");
-    const [timeLeft, setTimeLeft] = useState(null);
-    const [error, setError] = useState("");
+  useEffect(() => {
+    if (!started || !targetDate) return;
 
-    useEffect(() => {
-        if (!targetDate) return;
-        const interval = setInterval(() => {
-            const now = new Date().getTime();
-            const target = new Date(targetDate).getTime();
-            const diff = target - now;
-            if (diff <= 0) {
-                clearInterval(interval);
-                setTimeLeft("DONE");
-                setError("Please select a future date and time");
-            } else {
-                setTimeLeft(diff);
-                setError("");
-            }
-        }, 1000);
+    const interval = setInterval(() => {
+      const now = Date.now();
+      const target = new Date(targetDate).getTime();
+      const diff = target - now;
 
-        return () => clearInterval(interval);
-    }, [targetDate]);
+      if (diff <= 0) {
+        clearInterval(interval);
+        setTimeLeft("DONE");
+      } else {
+        setTimeLeft(diff);
+      }
+    }, 1000);
 
-    const handleSubmit = () => {
-        // const selectedTime = new Date(targetDate).getTime();
-        // const now = new Date().getTime();
+    return () => clearInterval(interval);
+  }, [started, targetDate]);
 
-        // if (!targetDate || selectedTime <= now) {
-        //     setError("Please select a future date and time");
-        //     return;
-        // }
+  const handleSubmit = () => {
+    const selectedTime = new Date(targetDate).getTime();
+    const now = Date.now();
 
-        // setError("");
-        // setTimeLeft(selectedTime - now);
+    if (!targetDate || selectedTime <= now) {
+      setError("Please select a future date and time");
+      return;
     }
 
-    return (
-        <Container maxWidth="sm" sx={{ textAlign: "center", mt: 8}}>
-            <Typography variant="h4" sx={{ mb: 3 }} >
-                Countdown Timer
-            </Typography>
+    setError("");
+    setStarted(true);
+    setTimeLeft(selectedTime - now);
+  };
 
-            <Stack spacing={2.5}>
-                <TextField
-                    type="datetime-local"
-                    label="Select Date & Time"
-                    slotProps={{
-                        inputLabel: { shrink: true },
-                    }}
-                    onChange={(e) => setTargetDate(e.target.value)}
-                />
+  return (
+    <Container maxWidth="sm" sx={{ textAlign: "center", mt: 8 }}>
+      <Typography variant="h4" sx={{ mb: 3 }}>
+        Countdown Timer
+      </Typography>
 
-                {error && <Typography color="error">{error}</Typography>}
+      <Stack spacing={2.5}>
+        <TextField
+          type="datetime-local"
+          label="Select Date & Time"
+          slotProps={{ inputLabel: { shrink: true } }}
+          onChange={(e) => {
+            setTargetDate(e.target.value);
+            setStarted(false);
+            setTimeLeft(null);
+          }}
+        />
 
-                <Button variant="contained" sx={{
-                    width: "max-content", alignSelf: "center",
-                    px: 3,
-                    py: 1.2,
-                }} onClick={handleSubmit}>
-                    Start Countdown
-                </Button>
+        {error && <Typography color="#ffffff">{error}</Typography>}
 
-                {timeLeft && <TimerCard timeLeft={timeLeft} />}
-            </Stack>
-        </Container>
-    );
-}
+        <Button
+          variant="contained"
+          sx={{
+            width: "max-content",
+            alignSelf: "center",
+            px: 3,
+            py: 1.2,
+          }}
+          onClick={handleSubmit}
+        >
+          Start Countdown
+        </Button>
+
+        {started && timeLeft && <TimerCard timeLeft={timeLeft} />}
+      </Stack>
+    </Container>
+  );
+};

@@ -3,10 +3,6 @@ body {
   color: rgb(255, 255, 255);
 }
 
-input {
-  color: red;
-}
-
 fieldset {
   border-color: rgb(0, 0, 0)!important;
 }
@@ -14,3 +10,8 @@ fieldset {
 label {
   color: rgb(239, 239, 239)!important;
 }
+
+h5 {
+  color: rgb(0, 0, 0)  ;
+}
+
