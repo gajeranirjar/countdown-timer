@@ -12,6 +12,30 @@ label {
 }
 
 h5 {
-  color: rgb(0, 0, 0)  ;
+  color: rgb(0, 0, 0);
 }
 
+@media(width <= 250px) {
+  html {
+    font-size: 12px;
+  }
+
+  button {
+    padding: 4px 8px!important;
+    max-width: 100px;
+  }
+  
+  fieldset {
+    max-width: 120px;
+  }
+  
+  input {
+    max-width: 120px;
+    padding: 10px 4px!important;
+  }
+
+  h4 {
+    font-size: 20px!important;
+  }
+
+}

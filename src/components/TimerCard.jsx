@@ -12,7 +12,7 @@ export const TimerCard = ({ timeLeft }) => {
   const hours = Math.floor((timeLeft / (1000 * 60 * 60)) % 24);
   const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
 
-  const items = [
+  const times = [
     { lable: "Days", value: days || 0 },
     { lable: "Hours", value: hours || 0},
     { lable: "Minutes", value: minutes || 0},
@@ -27,7 +27,7 @@ export const TimerCard = ({ timeLeft }) => {
         justifyContent="space-evenly"
         flexWrap="wrap"
       >
-        {items.map(({lable , value}) => (
+        {times.map(({lable , value}) => (
           <Paper
             key={lable}
             sx={{
